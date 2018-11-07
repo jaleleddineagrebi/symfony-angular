@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <h1>liste de produit</h1>
+    {% for prod in product %}
+    <a href="{{ path('edit_product',{"id":prod.id}) }}"><p>{{ prod.name }}  {{ prod.price }}</p> <a href="{{ path('delete_product',{"id":prod.id}) }}">delete</a></a>
+    {% endfor %}
+</div>
+
+</body>
+</html>

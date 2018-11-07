@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Plat;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,13 +10,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/plat", name="platpage")
      */
-    public function indexAction(Request $request)
+    public function ajoutAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        $plat=new Plat();
+        $form=$this->createForm('AppBundle\Form\PlatType',$plat);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()){
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($plat);
+            $em->flush($plat);
+        }
+        return $this->render('default/plat.html.twig',array(
+            'plat'=>$plat,
+            'form'=>$form->createView(),
+
+        ));
     }
+
 }
